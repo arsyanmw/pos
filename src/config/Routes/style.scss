@@ -1,0 +1,94 @@
+.appContainer {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+
+  .contentWrapper {
+    padding: 10;
+
+    #top {
+      height: 20vh;
+      margin-top: 20px;
+
+      .profilePict {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #111d5e;
+      }
+
+      .textStyle {
+        margin-top: 20px;
+        color: #000;
+        font-size: 18px;
+        font-weight: 700;
+        transition: .5s;
+
+        &:hover {
+          color: darkgrey;
+          transition: .5s;
+        }
+      }
+    }
+
+    #navi {
+      margin-top: 60px;
+
+      .navList {
+        cursor: pointer;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        transition: .5s;
+
+        .navigation {
+          color: #000;
+
+          .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 7px;
+            transition: .5s;
+          }
+
+          .text {
+            transition: .3s;
+            padding: 7px 10px;
+          }
+        }
+
+        &:hover {
+          background: #111d5e;
+
+          .icon {
+            transition: .3s;
+            color: #fff;
+          }
+
+          .text {
+            transition: .5s;
+            transform: translateX(5px);
+            color: #fff;
+          }
+        }
+      }
+
+      .active {
+        transition: .5s;
+        background: #111d5e;
+
+        .icon {
+          color: #fff;
+        }
+
+        .text {
+          transition: .5s;
+          transform: translateX(5px);
+          color: #fff;
+        }
+      }
+    }
+  }
+}

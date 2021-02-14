@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './pages/App';
 import reportWebVitals from './reportWebVitals';
+import {ConfigProvider} from 'antd';
+import ID from 'antd/lib/locale/id_ID'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <ConfigProvider locale={ID}>
+            <App key={ID} />
+        </ConfigProvider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
