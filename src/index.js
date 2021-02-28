@@ -7,11 +7,9 @@ import {ConfigProvider} from 'antd';
 import ID from 'antd/lib/locale/id_ID'
 
 ReactDOM.render(
-    <React.StrictMode>
-        <ConfigProvider locale={ID}>
-            <App key={ID} />
-        </ConfigProvider>
-    </React.StrictMode>,
+    <ConfigProvider locale={ID}>
+        <App key={ID} />
+    </ConfigProvider>,
     document.getElementById('root')
 );
 

@@ -1,6 +1,5 @@
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import AppStackNavigator from "./AppStackNavigator";
-import UserStackNavigator from "./UserStackNavigator";
 
 const Routes = () => {
     return (

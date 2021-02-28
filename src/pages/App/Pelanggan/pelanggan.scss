@@ -3,3 +3,12 @@
   background: #111d5e;
   color: #fff;
 }
+
+.anchor {
+  margin: 0;
+  font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

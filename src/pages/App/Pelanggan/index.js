@@ -24,11 +24,11 @@ const Pelanggan = () => {
         {
             title: 'Opsi',
             dataIndex: 'option',
-            render: (text, record) => (
+            render: () => (
                 <Space size={"middle"}>
-                    <a>View</a>
-                    <a style={{color: 'orange'}}>Edit</a>
-                    <a style={{color: 'red'}}>Delete</a>
+                    <p className="anchor" style={{color: 'blue'}}>View</p>
+                    <p className="anchor" style={{color: 'orange'}}>Edit</p>
+                    <p className="anchor" style={{color: 'red'}}>Delete</p>
                 </Space>
             ),
         }

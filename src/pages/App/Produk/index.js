@@ -204,8 +204,8 @@ const Produk = () => {
                                     </Row>
                                     <Row style={{marginTop: 20}}>
                                         <Col span={24}>
-                                            <Table columns={columns} dataSource={data.filter(v => {
-                                                return v.type === tab.name
+                                            <Table columns={columns} dataSource={data.filter(rec => {
+                                                return rec.type === tab.name
                                             })}/>
                                         </Col>
                                     </Row>

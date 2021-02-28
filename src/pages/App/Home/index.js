@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {
     Row,
     Col,
@@ -21,16 +21,26 @@ const Home = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [form, setForm] = useState({
         name: '',
-        date: ''
+        date: '',
+        transType: '',
+        phone: ''
     });
+    const [price, setPrice] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        Axios.get('http://127.0.0.1/curl/')
+    const handleSearchPhoneProvider = (e = null, type = null) => {
+        setIsLoading(true);
+        const prefix = e == null ? form.phone.toString().slice(0,4) : e.toString().slice(0,4);
+        console.log(form);
+
+        Axios.get(`http://localhost:8000/api/price-${type == null ? 'credit' : type}/${prefix}`)
             .then(res => {
-                console.log('data', res.data.data)
+                setPrice(res.data.data);
+                setIsLoading(false);
+                console.log(res.data.data)
             })
             .catch(err => console.log(err))
-    })
+    }
 
     const salesCard = [
         {
@@ -116,7 +126,24 @@ const Home = () => {
     ];
 
     // Data Select
-    const type = ['Top Up', 'Pulsa', 'Listrik'];
+    const type = [
+        {
+            name: 'Top Up',
+            key: 'topup'
+        },
+        {
+            name: 'Pulsa',
+            key: 'credit'
+        },
+        {
+            name: 'Paket Data',
+            key: 'paketData'
+        },
+        {
+            name: 'Listrik',
+            key: 'listrik'
+        },
+    ];
 
     return (
         <Row>
@@ -158,7 +185,6 @@ const Home = () => {
                                                     <Form.Item
                                                         label={"Nama"}
                                                         name={"nama"}
-                                                        rules={[{required: true, message: 'Isi dulu namanya!'}]}
                                                     >
                                                         <Input placeholder={"Nama"} />
                                                     </Form.Item>
@@ -178,22 +204,62 @@ const Home = () => {
                                                         name={"transactionType"}
                                                         rules={[{required: true, message: 'Isi dulu Tipenya!'}]}
                                                     >
-                                                        <Select defaultValue={type[0]}>
+                                                        <Select placeholder={'Pilih Tipe Transaksi'}
+                                                                onChange={(e) => {
+                                                                    setForm({
+                                                                        ...form,
+                                                                        transType: e
+                                                                    });
+                                                                    handleSearchPhoneProvider(null, e);
+                                                                }}>
                                                             {type.map(t => (
-                                                                <Option key={t}>{t}</Option>
+                                                                <Option value={t.key} key={t.key}>{t.name}</Option>
                                                             ))}
                                                         </Select>
                                                     </Form.Item>
                                                 </Col>
                                                 <Col lg={10} sm={24}>
                                                     <Form.Item
+                                                        label={"Nomor Telepon"}
+                                                        name={"phone"}
+                                                        rules={[{required: true, message: 'Isi dulu nomornya!'}]}
+                                                    >
+                                                        <Input
+                                                            placeholder={"Nomor Telepon"}
+                                                            onChange={(e) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    phone: e.target.value
+                                                                });
+                                                                handleSearchPhoneProvider(e.target.value, null);
+                                                            }}
+                                                        />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                            <Row justify={'space-between'}>
+                                                <Col lg={10} sm={24}>
+                                                    <Form.Item
                                                         label={"Qty"}
                                                         name={"transactionQty"}
                                                         rules={[{required: true, message: 'Isi dulu Harganya!'}]}
                                                     >
-                                                        <Select defaultValue={type[0]} style={{width: '100%'}}>
-                                                            {type.map(t => (
-                                                                <Option key={t}>{t}</Option>
+                                                        <Select
+                                                            showSearch
+                                                            optionFilterProp={'children'}
+                                                            filterOption={(input, option) =>
+                                                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                                            }
+                                                            filterSort={(optionA, optionB) =>
+                                                                optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                                                            }
+                                                            style={{width: '100%'}}
+                                                            placeholder={'Pilih Qty'}
+                                                            loading={isLoading}
+                                                            disabled={isLoading}
+                                                        >
+                                                            {price && price.map(t => (
+                                                                <Option key={t.partner_package.package.id}>{t.partner_package.package.name}</Option>
                                                             ))}
                                                         </Select>
                                                     </Form.Item>
